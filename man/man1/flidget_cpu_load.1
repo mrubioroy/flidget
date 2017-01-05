@@ -1,0 +1,13 @@
+.TH FLIDGET_CPU_LOAD 1
+.SH NAME
+flidget_cpu_load \- script that periodically polls CPU load.
+.SH SYNOPSIS
+.B flidget_cpu_load
+cpu_core integration_time
+.SH OPTIONS
+.TP
+.BR cpu_core
+Number of logical core. Starts at 0. With hyperthreading can be larger than the real number of cores.
+.TP
+.BR integration_time
+floating point decimal with the integration time in seconds (e.g. 1.0).

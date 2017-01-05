@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/flidget
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Flidget
+Comment=Flexible widget system

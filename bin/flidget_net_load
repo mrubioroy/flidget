@@ -1,0 +1,44 @@
+#!/usr/bin/env python2
+
+import time,sys
+
+if len(sys.argv)<3:
+    print("usage: %s net_device integration_time"%(sys.argv[0]))
+    sys.exit(1)
+
+device=sys.argv[1]
+
+try:
+    wait=float(sys.argv[2])
+except:
+    print("integration_time must be a floating point number")
+    sys.exit(1)
+
+def get_up_down():
+    fields=[0]*9
+    with open('/proc/net/dev') as f:
+        for line in f:
+            if line.strip().startswith(device):
+                fields=[float(col) for col in line.strip().split()[1:]]
+    down=fields[0]
+    up=fields[8]
+    return up,down
+
+last_up,last_down=get_up_down()
+time.sleep(wait)
+while True:
+    up,down=get_up_down()
+    # deltas
+    up_delta=up-last_up
+    down_delta=down-last_down
+    # update last
+    last_up,last_down=up,down
+    # get speed in kB
+    up_speed=up_delta/(1024*wait)
+    down_speed=down_delta/(1024*wait)
+    sys.stdout.write('%.1f %.1f\n'%(down_speed,up_speed))
+    try:
+        sys.stdout.flush()
+    except:
+        sys.exit(1)
+    time.sleep(wait)

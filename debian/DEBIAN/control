@@ -1,0 +1,12 @@
+Package: flidget
+Version: 1.0-1
+Section: gnome
+Priority: optional
+Architecture: amd64
+Depends: libc6 (>= 2.23), libgtk-3-0 (>= 3.18)
+Recommends: python2.7 (>=2.7)
+Maintainer: M. Rubio-Roy <mrubioroy@raspa.cat>
+Description: Flexible widget system
+ Flidget works on the background over your desktop showing
+ any information arriving through simple scripts or
+ processes (cpu load, syslog, temperatures, cpu frequency, etc.)

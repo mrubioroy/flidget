@@ -1,0 +1,36 @@
+#!/usr/bin/env python2
+
+import time,sys,subprocess
+
+if len(sys.argv)<3:
+    print("usage: %s cpu_core refresh_period"%(sys.argv[0]))
+    print("       cpu_core starts at 0 (real cores; no hyperthreading)")
+    sys.exit(1)
+
+try:
+    cpu="Core %d"%(int(sys.argv[1]))
+except:
+    print("cpu_core must be a decimal integer")
+    sys.exit(1)
+
+try:
+    wait=float(sys.argv[2])
+except:
+    print("refresh_period must be a floating point number")
+    sys.exit(1)
+
+def get_temp():
+    proc=subprocess.Popen("sensors",stdout=subprocess.PIPE)
+    data,_=proc.communicate()
+    for line in data.split("\n"):
+        if line.startswith(cpu):
+            return float(line.split()[2][:-3])
+    return 0
+
+while True:
+    sys.stdout.write('%.1f\n'%(get_temp()))
+    try:
+        sys.stdout.flush()
+    except:
+        sys.exit(1)
+    time.sleep(wait)

@@ -1,0 +1,25 @@
+/* Class console for all flidgets of type console */
+.console {
+  color:#0f0;
+  background-color: rgba(0,0,0,0.5);
+  font:monospace 8px;
+  padding:5px;
+}
+
+/* Class graph for all flidgets of type graph */
+.graph {
+  background-color: rgba(0,0,0,0.5);
+  font:monospace 8px;
+  color:#0f0;
+}
+
+/* Use @define-color to set the color of streams in a graph
+ * You can use the syntax X_Y were X is the label or the type
+ * of flidget and Y is the stream number (starting at 1).
+ * The priority to colorize a stream is label_stream, type_stream,
+ * and the standard CSS property color.
+ * For example, graph_2 will be used for all the second streams
+ * except if a eth0_1 matches, which has higher priority.
+ * If no matching @define-color is found, the property color of
+ * class graph will be used. */
+@define-color graph_2 #ff0000;

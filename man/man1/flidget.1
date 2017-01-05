@@ -1,0 +1,82 @@
+.TH FLIDGET 1
+.SH NAME
+flidget \- Flexible widget system
+.SH SYNOPSIS
+.B flidget
+[\fB\-\-help|config_folder\fR]
+.SH DESCRIPTION
+.B flidget
+works on the background over your desktop showing
+any information arriving through simple scripts or
+processes (cpu load, syslog, temperatures, cpu frequency, etc.)
+.SH OPTIONS
+.TP
+.BR \-\-help
+Show usage of flidget
+.TP
+.BR config_folder
+Set the folder where flidget.conf and, optionally, flidget.css can be found. If not set, the default is ~/.config/flidget
+
+Examples of flidget.conf and flidget.css can be found in /usr/share/doc/flidget/
+.SH AUTOSTART
+An example flidget.desktop file for ~/.config/autostart is included in /usr/share/doc/flidget/
+.SH FLIDGET.CONF SYNTAX
+The configuration file defines each widget starting with a [name] tag. A series of fields then follow depending on the type of widget. A typical example for a cpu load widget would be:
+.nf
+
+[cpu0]
+  type=graph
+  command=/usr/bin/flidget_cpu_load.py 0 1 2>/dev/null
+  left=65
+  top=435
+  width=150
+  height=60
+  nb_streams=1
+  max=100
+  units=%
+
+.fi
+All widgets must include the fields type, command, left, top, width and height.
+.TP
+.BR type
+Type of widget. Can be graph or console
+.TP
+.BR command
+Command that will provide a feed of data to plot or print. Flidget includes the commands flidget_cpu_load, flidget_cpu_temp, flidget_cpu_freq and flidget_net_load.
+.TP
+.B left, top, width and height
+positions or dimensions in pixels of the widget
+.PP
+Depending on the type of widget, other field must be also included. Two types of widget are available: graph and console.
+.PP
+Graph widgets must include the fields:
+.TP
+.BR nb_streams
+Number of graphs on a single widget. On a network load widget that can be upload and download rates. The script providing the data must output nb_streams space-separated data items per line. 
+.TP
+.BR max
+Maximum ordinate in the graph (i.e. max y). If zero, ordinate range is automatically set to fit data.
+.TP
+.BR units
+Units of the represented data (e.g: % for cpu load or kB/s for network load)
+.PP
+Console widgets must include:
+.TP
+.BR buffer
+Size of the buffer that will store the output of the command. The bigger, the longer history of the output you'll have.
+.PP
+An example of a console widget could be:
+.nf
+
+[journalctl]
+  type=console
+  command=journalctl -f
+  left=65
+  top=25
+  width=630
+  height=400
+  buffer=65536
+
+.fi
+.SH "SEE ALSO"
+flidget_cpu_load(1), flidget_cpu_temp(1), flidget_cpu_freq(1), flidget_net_load(1)

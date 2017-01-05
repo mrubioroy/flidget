@@ -1,0 +1,10 @@
+*.o
+*~
+*.so
+*.log
+*.aux
+*.out
+*.exe
+*.pyc
+bin/flidget
+debian/usr

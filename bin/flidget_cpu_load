@@ -1,0 +1,47 @@
+#!/usr/bin/env python2
+
+import time,sys
+
+if len(sys.argv)<3:
+    print("usage: %s cpu_core integration_time"%(sys.argv[0]))
+    print("       cpu_core starts at 0")
+    sys.exit(1)
+
+try:
+    cpu="cpu%d"%(int(sys.argv[1]))
+except:
+    print("cpu_core must be a decimal integer")
+    sys.exit(1)
+
+try:
+    wait=float(sys.argv[2])
+except:
+    print("integration_time must be a floating point number")
+    sys.exit(1)
+
+def get_idle_total():
+    with open('/proc/stat') as f:
+        for line in f:
+            if line.startswith(cpu):
+                fields=[float(col) for col in line.strip().split()[1:]]
+    idle=fields[3]
+    total=sum(fields)
+    return idle,total
+
+last_idle,last_total=get_idle_total()
+time.sleep(wait)
+while True:
+    idle,total=get_idle_total()
+    # deltas
+    idle_delta=idle-last_idle
+    total_delta=total-last_total
+    # update last
+    last_idle,last_total=idle,total
+    # get percentage
+    utilisation=100.0*(1.0-idle_delta/total_delta)
+    sys.stdout.write('%.1f\n'%(utilisation))
+    try:
+        sys.stdout.flush()
+    except:
+        sys.exit(1)
+    time.sleep(wait)
