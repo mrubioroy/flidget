@@ -22,14 +22,14 @@ INSTALLATION ON DEBIAN-BASED SYSTEMS
 3. If using autostart, copy flidget.desktop.gz from /usr/share/doc/flidget/ to ~/.config/autostart/, ungzip, log out and log in. Otherwise, start with:
    flidget
 
-INSTALLATION ON OTHER SYSTEMS
+INSTALLATION ON OTHER SYSTEMS (BUILD)
 
-1. Get the latest tarball from the project:
+1. Get the latest source code tarball from the project:
    https://github.com/mrubioroy/flidget/releases
 
    Untar, compile and install flidget at /usr/local/bin (replace VERSION appropriately):
-   tar -xf flidget_VERSION.tar.gz
-   cd flidget_VERSION
+   tar -xf flidget-VERSION.tar.gz
+   cd flidget-VERSION
    sudo make local_install
 
 3. Example files of flidget.conf and flidget.css can be found at the doc folder. Copy them to ~/.config/flidget/ (the default configuration folder)
